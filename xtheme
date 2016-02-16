@@ -1,0 +1,132 @@
+#!/bin/sh
+
+# xtheme - xtremely lightweight Xresources color scheme manager
+#
+# Copyright (C) 2016 Armin Jenewein <armin@m2m.pm>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, see <http://www.gnu.org/licenses/>.
+
+
+banner () {
+tput setaf 4
+echo -n "["
+tput setaf 5
+echo -n "xtheme"
+tput setaf 4
+echo -n "]  "
+tput sgr0
+}
+
+banner
+
+# file locations
+currentfile="$HOME/git/xresources/.current"
+overridesfile="$HOME/git/xresources/.overrides"
+themesdir="$HOME/git/xresources/themes"
+
+# show usage information
+usage () {
+  echo "Usage: xtheme [--get|--set <themename>|--help]"
+  echo ""
+  echo "       --get              - get current theme name"
+  echo "       --set <themename>  - set theme"
+  echo "       --list             - list available themes"
+  echo "       --help             - this help screen"
+}
+
+# throw an error message (and exit)
+error () {
+  echo "$0: Error: $@"
+  exit 1
+}
+
+# check if themes directory exists
+if [ ! -d "$themesdir" ]; then
+  error "Themes directory $themesdir does not exist. Exiting."
+fi
+
+# list currently installed themes
+listthemes () {
+  echo "List of installed themes: "
+  echo
+  cd $themesdir
+  ls
+  exit 0
+}
+
+# set theme
+settheme () {
+  # set theme name from command line
+  name="$1"
+
+  echo "Setting theme: $name"
+
+  # check if theme file is present
+  if [ ! -f "$themesdir/${name}" ]; then
+    error "Theme not found: $name"
+  fi
+
+  # cleanup
+  xrdb -remove
+  if [ -L $currentfile ]; then
+    rm -f $currentfile
+  else
+    error "$currentfile does not exist or is not a symbolic link"
+  fi
+
+  # create symlink for current theme
+  echo -n "Creating symbolic link for new theme... "
+  ln -s "$themesdir/${name}" "$currentfile"
+  echo "done."
+
+  # merge current / overrides and feed to xrdb
+  echo -n "xrdb: Loading new Xresources definitions... "
+  cat $currentfile $overridesfile | xrdb
+  echo "done."
+}
+
+# gets current wallpaper 
+get () {
+  echo -n "Current theme: "
+  /bin/ls -al "$currentfile" | /bin/sed -E 's/^.*\ ->\ (.*)$/\1/;s/.*\/(.*)/\1/'
+}
+
+# parse commandline arguments
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --set)
+      shift
+      settheme "$1"
+      exit 0
+      ;;
+    --get)
+      get
+      exit 0
+    ;;
+    --list)
+      listthemes
+    ;;
+    --help|*)
+      usage
+      exit 1
+    ;;
+  esac
+done
+
+# show usage information if we get no arguments at all
+usage
+exit 1
+
+
+
