@@ -31,8 +31,8 @@ tput sgr0
 banner
 
 # file locations
-currentfile="$HOME/git/xresources/.current"
-overridesfile="$HOME/git/xresources/.overrides"
+currentfile="$HOME/git/xresources/current"
+overridesfile="$HOME/git/xresources/overrides"
 themesdir="$HOME/git/xresources/themes"
 
 # show usage information
@@ -41,6 +41,7 @@ usage () {
   echo ""
   echo "       --get              - get current theme name"
   echo "       --set <themename>  - set theme"
+  echo "       --reload           - (re)set last set theme, reload xrdb"
   echo "       --list             - list available themes"
   echo "       --help             - this help screen"
 }
@@ -98,8 +99,13 @@ settheme () {
 
 # gets current wallpaper 
 get () {
-  echo -n "Current theme: "
   /bin/ls -al "$currentfile" | /bin/sed -E 's/^.*\ ->\ (.*)$/\1/;s/.*\/(.*)/\1/'
+}
+
+reload () {
+  echo "re-loading settings..."
+  current="$(get)"
+  settheme "$current"
 }
 
 # parse commandline arguments
@@ -112,6 +118,10 @@ while [ $# -gt 0 ]; do
       ;;
     --get)
       get
+      exit 0
+    ;;
+  --reload)
+      reload
       exit 0
     ;;
     --list)
