@@ -39,9 +39,9 @@ themesdir="$HOME/git/xresources/themes"
 usage () {
   echo "Usage: xtheme [--get|--set <themename>|--help]"
   echo ""
-  echo "       --get              - get current theme name"
+  echo "       --get|--status     - get current theme name / status"
   echo "       --set <themename>  - set theme"
-  echo "       --reload           - (re)set last set theme, reload xrdb"
+  echo "       --reload|--reset   - reload / re-set last set theme, then reload X11 resource database"
   echo "       --list             - list available themes"
   echo "       --help             - this help screen"
 }
@@ -116,11 +116,11 @@ while [ $# -gt 0 ]; do
       settheme "$1"
       exit 0
       ;;
-    --get)
+    --get|--status)
       get
       exit 0
     ;;
-  --reload)
+  --reload|--reset)
       reload
       exit 0
     ;;
