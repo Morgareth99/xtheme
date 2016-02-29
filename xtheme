@@ -83,7 +83,7 @@ settheme () {
   if [ -L $currentfile ]; then
     rm -f $currentfile
   else
-    error "$currentfile does not exist or is not a symbolic link"
+    mv "$currentfile" "${currentfile}.xtheme.orig"
   fi
 
   # create symlink for current theme
