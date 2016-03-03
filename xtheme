@@ -30,6 +30,8 @@ tput sgr0
 
 banner
 
+tput setaf 7
+
 # file locations
 currentfile="$HOME/git/xresources/current"
 overridesfile="$HOME/git/xresources/overrides"
@@ -37,24 +39,29 @@ themesdir="$HOME/git/xresources/themes"
 
 # show usage information
 usage () {
+  tput setaf 3
   echo "Usage: xtheme [--get|--set <themename>|--help]"
+  tput setaf 6
   echo ""
   echo "       --get|--status     - get current theme name / status"
   echo "       --set <themename>  - set theme"
   echo "       --reload|--reset   - reload / re-set last set theme, then reload X11 resource database"
   echo "       --list             - list available themes"
+  echo "       --edit             - edit Xresources overrides file, then reload X11 resource database"
   echo "       --help             - this help screen"
 }
 
 # throw an error message (and exit)
 error () {
+  banner
+  tput setaf 9
   echo "$0: Error: $@"
-  exit 1
 }
 
 # check if themes directory exists
 if [ ! -d "$themesdir" ]; then
   error "Themes directory $themesdir does not exist. Exiting."
+  exit 1
 fi
 
 # list currently installed themes
@@ -62,6 +69,7 @@ listthemes () {
   echo "List of installed themes: "
   echo
   cd $themesdir
+  tput setaf 14
   ls
   exit 0
 }
@@ -75,7 +83,11 @@ settheme () {
 
   # check if theme file is present
   if [ ! -f "$themesdir/${name}" ]; then
-    error "Theme not found: $name"
+    error "Theme not found: ${name}"
+    banner
+    tput setaf 14
+    echo "Use --list to get a list of available themes."
+    exit 1
   fi
 
   # cleanup
@@ -116,7 +128,15 @@ while [ $# -gt 0 ]; do
       settheme "$1"
       exit 0
       ;;
-    --get|--status)
+    --edit)
+      shift
+      echo "Opening overrides file in vim..."
+      sleep 1
+      vim $HOME/git/xresources/overrides
+      reload
+      exit 0
+      ;;
+     --get|--status)
       get
       exit 0
     ;;
@@ -127,7 +147,7 @@ while [ $# -gt 0 ]; do
     --list)
       listthemes
     ;;
-    --help|*)
+    --help)
       usage
       exit 1
     ;;
@@ -135,6 +155,9 @@ while [ $# -gt 0 ]; do
 done
 
 # show usage information if we get no arguments at all
+tput setaf 9
+echo "Usage Error."
+tput setaf 14
 usage
 exit 1
 
