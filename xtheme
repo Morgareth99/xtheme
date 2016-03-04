@@ -1,4 +1,6 @@
-#!/bin/sh
+#!/bin/bash
+
+
 
 # xtheme - xtremely lightweight Xresources color scheme manager
 #
@@ -47,13 +49,13 @@ usage () {
   echo "       --set <themename>  - set theme"
   echo "       --reload|--reset   - reload / re-set last set theme, then reload X11 resource database"
   echo "       --list             - list available themes"
+  echo "       --menu             - display a curses-like menu chooser with available themes"
   echo "       --edit             - edit Xresources overrides file, then reload X11 resource database"
   echo "       --help             - this help screen"
 }
 
 # throw an error message (and exit)
 error () {
-  banner
   tput setaf 9
   echo "$0: Error: $@"
 }
@@ -120,6 +122,21 @@ reload () {
   settheme "$current"
 }
 
+showmenu () {
+  cd "$themesdir"
+  files=(*)
+  results=""
+  n=0
+  for i in "${files[@]}"; do
+    results="$results $n $i"
+    let n+=1
+  done
+  a=$(dialog --stdout --menu '[xtheme] X11/Xresources theme chooser' 20 70 20 $(echo $results))
+  theme="${files[$a]}"
+  settheme "$theme"
+  exit 0
+}
+
 # parse commandline arguments
 while [ $# -gt 0 ]; do
   case "$1" in
@@ -136,11 +153,13 @@ while [ $# -gt 0 ]; do
       reload
       exit 0
       ;;
-     --get|--status)
+    --get|--status)
+      shift
       get
       exit 0
     ;;
-  --reload|--reset)
+    --reload|--reset)
+      shift
       reload
       exit 0
     ;;
@@ -151,15 +170,17 @@ while [ $# -gt 0 ]; do
       usage
       exit 1
     ;;
+    --menu)
+      showmenu
+      exit 0
+    ;;
+    '')
+      showmenu
+      exit 0
+    ;;
   esac
 done
 
-# show usage information if we get no arguments at all
-tput setaf 9
-echo "Usage Error."
-tput setaf 14
-usage
-exit 1
-
+showmenu; exit 0
 
 
