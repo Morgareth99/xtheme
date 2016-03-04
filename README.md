@@ -68,6 +68,12 @@ Creating symbolic link for new theme... done.
 xrdb: Loading new Xresources definitions... done.
 armin@square:~$ 
 
+Interactive Menu Selection
+==========================
+
+xtheme --menu (See Screenshot: http://unix.porn/xtheme.png)
+
+
 Enjoy.
 
 
