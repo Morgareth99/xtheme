@@ -1,7 +1,4 @@
 #!/bin/bash
-
-
-
 # xtheme - xtremely lightweight Xresources color scheme manager
 #
 # Copyright (C) 2016 Armin Jenewein <armin@m2m.pm>
@@ -19,7 +16,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, see <http://www.gnu.org/licenses/>.
 
-
 banner () {
 tput setaf 4
 echo -n "["
@@ -35,9 +31,10 @@ banner
 tput setaf 7
 
 # file locations
-currentfile="$HOME/git/xtheme/xresources/current"
-overridesfile="$HOME/git/xtheme/xresources/overrides"
-themesdir="$HOME/git/xtheme/xresources/themes"
+dir="${0%/*}"
+currentfile="$dir/xresources/current"
+overridesfile="$dir/xresources/overrides"
+themesdir="$dir/xresources/themes"
 
 # show usage information
 usage () {
@@ -149,7 +146,7 @@ while [ $# -gt 0 ]; do
       shift
       echo "Opening overrides file in vim..."
       sleep 1
-      vim $HOME/git/xtheme/xresources/overrides
+      vim "$dir/xresources/overrides"
       reload
       exit 0
       ;;
