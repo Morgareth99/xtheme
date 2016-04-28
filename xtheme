@@ -35,9 +35,9 @@ banner
 tput setaf 7
 
 # file locations
-currentfile="$HOME/git/xresources/current"
-overridesfile="$HOME/git/xresources/overrides"
-themesdir="$HOME/git/xresources/themes"
+currentfile="$HOME/git/xtheme/xresources/current"
+overridesfile="$HOME/git/xtheme/xresources/overrides"
+themesdir="$HOME/git/xtheme/xresources/themes"
 
 # show usage information
 usage () {
@@ -149,7 +149,7 @@ while [ $# -gt 0 ]; do
       shift
       echo "Opening overrides file in vim..."
       sleep 1
-      vim $HOME/git/xresources/overrides
+      vim $HOME/git/xtheme/xresources/overrides
       reload
       exit 0
       ;;
