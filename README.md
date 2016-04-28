@@ -5,7 +5,9 @@ xtheme - xtremely lightweight Xresources color scheme manager
 
 Screenshot
 ==========
-For a screenshot of xtheme in action, have a look at: http://unix.porn/xtheme.png
+
+![alt tag](http://unix.porn/xtheme.png)
+
 
 License
 =======
