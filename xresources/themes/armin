@@ -1,0 +1,165 @@
+!! basic colors
+URxvt*background:       rgba:1111/1111/1111/aaaa
+! *foreground:            #bbbbaa
+
+! *fading:                0
+*fadeColor:             #111111
+
+*cursorColor:           #985544
+
+*pointerColorBackground:#556677
+*pointerColorForeground:#99aacc
+
+*background: #1D1D1D
+*foreground: #C5C6C7
+
+! black
+*color0: #282A2E
+*color8: #373B41
+! ! red
+*color1: #A54242
+*color9: #CC6666
+! ! green
+*color2: #8C9440
+*color10: #B5BD68
+! yellow
+*color3: #DE935F
+*color11: #F0C674
+! blue
+*color4: #5F819D
+!!!*color4: #2F415D
+*color12: #81A2BE
+!!!*color12: #41627E
+! magenta
+*color5: #85678F
+*color13: #B294BB
+! cyan
+*color6: #5E8D87
+*color14: #8ABEB7
+! white
+*color7: #707880
+*color15: #C5C8C6
+!
+
+! !! black dark/light
+! *color0:                #666655
+! *color8:                #444433
+! 
+! !! red dark/light
+! *color1:                #aa4433
+! *color9:                #883322
+! 
+! !! green dark/light
+! *color2:                #558822
+! *color10:               #77bb44
+! 
+! !! yellow dark/light
+! *color3:                #aa7722
+! *color11:               #667788
+! 
+! !! blue dark/light
+! *color4:                #334455
+! *color12:               #278899
+! 
+! !! magenta dark/light
+! *color5:                #aa3388
+! *color13:               #6677aa
+! 
+! !! cyan dark/light
+! *color6:                #22aa99
+! *color14:               #99aaaa
+! 
+! !! white dark/light
+! *color7:                #aaaaaa
+! *color15:               #888888
+! 
+URxvt.perl-ext-common: font-size
+
+
+!! font example:
+!!  -misc-fixed-bold-r-normal--15-140-75-75-c-90-iso10646-1
+!
+! 12 / 16
+!
+!URxvt.font: -*-terminus-medium-*-normal-*-20-*-*-*-*-*-*-*
+!URxvt.font: -*-terminesspowerline-medium-*-normal-*-20-*-*-*-*-*-*-*
+!URxvt.boldFont: -*-terminesspowerline-medium-*-normal-*-20-*-*-*-*-*-*-*
+
+! -xos4-terminesspowerline-medium-r-normal--12-120-72-72-c-60-iso10646-1
+!
+!URxvt.font: xft:Droid Sans Mono for Powerline:style=Regular:size=10
+!URxvt.boldFont: xft:Droid Sans Mono for Powerline:style=Regular:size=10
+
+! Input Mono:
+!URxvt.font: xft:InputMono for Powerline:style=Regular:size=10, xft:Input Mono:size=8, xft:Input Mono,InputMono Medium:style=Regular:size=9
+!URxvt.boldFont: xft:InputMono for Powerline:style=Regular:size=10, xft:Input Mono:size=8, xft:Input Mono,InputMono Medium:style=Regular:size=9
+
+! Liberation Mono:
+!URxvt.font: xft:Inconsolata for Powerline:style=Regular:size=14, xft:Input Mono:size=14, xft:Input Mono,InputMono Medium:style=Regular:size=14
+!URxvt.boldFont: xft:Inconsolata for Powerline:style=Regular:size=14, xft:Input Mono:size=14, xft:Input Mono,InputMono Medium:style=Regular:size=14
+
+URxvt.font: xft:Inconsolata for Powerline:style=Regular:size=11
+URxvt.boldFont: xft:Inconsolata for Powerline:style=Regular:size=11
+
+
+! Liberation Mono:
+!URxvt.font: xft:Liberation Mono for Powerline:style=Regular:size=10, xft:Input Mono:size=8, xft:Input Mono,InputMono Medium:style=Regular:size=9
+!URxvt.boldFont: xft:Liberation Mono for Powerline:style=Regular:size=10, xft:Input Mono:size=8, xft:Input Mono,InputMono Medium:style=Regular:size=9
+
+
+!URxvt.font: -*-terminus-medium-*-normal-*-16-*-*-*-*-*-*-*
+!URxvt.boldFont: -*-terminus-medium-*-normal-*-16-*-*-*-*-*-*-*
+
+
+URxvt.keysym.C-plus:     perl:font-size:increase
+URxvt.keysym.C-minus:   perl:font-size:decrease
+
+URxvt.keysym.Mod4-plus: perl:font-size:increase
+URxvt.keysym.Mod4-minus: perl:font-size:decrease
+
+URxvt.keysym.C-S-Up:   perl:font-size:incglobal
+URxvt.keysym.C-S-Down: perl:font-size:decglobal
+
+URxvt.pointerBlank: True
+URxvt.pointerBlankDelay: 1
+
+
+
+
+! xscreensaver ---------------------------------------------------------------
+!
+! !font settings
+xscreensaver.Dialog.headingFont:        -*-dina-bold-r-*-*-18-*-*-*-*-*-*-*
+xscreensaver.Dialog.bodyFont:           -*-dina-medium-r-*-*-18-*-*-*-*-*-*-*
+xscreensaver.Dialog.labelFont:          -*-dina-medium-r-*-*-18-*-*-*-*-*-*-*
+xscreensaver.Dialog.unameFont:          -*-dina-medium-r-*-*-18-*-*-*-*-*-*-*
+xscreensaver.Dialog.buttonFont:         -*-dina-bold-r-*-*-18-*-*-*-*-*-*-*
+xscreensaver.Dialog.dateFont:           -*-dina-medium-r-*-*-18-*-*-*-*-*-*-*
+xscreensaver.passwd.passwdFont:         -*-dina-bold-r-*-*-18-*-*-*-*-*-*-*
+!general dialog box (affects main hostname, username, password text)
+xscreensaver.Dialog.foreground:         #aaaaaa
+xscreensaver.Dialog.background:         #202020
+xscreensaver.Dialog.topShadowColor:     #000000
+xscreensaver.Dialog.bottomShadowColor:  #000000
+xscreensaver.Dialog.Button.foreground:  #aaaaaa
+xscreensaver.Dialog.*.background:  #000000
+!username/password input box and date text colour
+xscreensaver.Dialog.text.foreground:    #aaaaaa
+xscreensaver.Dialog.text.background:    #202020
+xscreensaver.Dialog.internalBorderWidth: 0
+xscreensaver.Dialog.borderWidth:        0
+xscreensaver.Dialog.shadowThickness:    0
+!timeout bar (background is actually determined by Dialog.text.background)
+xscreensaver.passwd.thermometer.foreground:  #777777
+xscreensaver.passwd.thermometer.background:  #101010
+xscreensaver.passwd.thermometer.width:       4
+!datestamp format--see the strftime(3) manual page for details
+xscreensaver.dateFormat:    %I:%M:%S
+
+
+
+
+
+
+
+
