@@ -147,7 +147,6 @@ showmenu () {
   fi
   theme="${files[$a]}"
   settheme "$theme"
-  demo
   exit 0
 }
 
