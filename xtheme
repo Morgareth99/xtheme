@@ -1,5 +1,6 @@
 #!/bin/bash
-# xtheme - xtremely lightweight Xresources color scheme manager
+#
+# [xtheme] xtremely lightweight Xresources color scheme manager
 #
 # Copyright (C) 2016 Armin Jenewein <armin@m2m.pm>
 #
@@ -15,6 +16,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, see <http://www.gnu.org/licenses/>.
+#
 
 banner () {
 tput setaf 4
@@ -28,7 +30,7 @@ tput sgr0
 
 banner
 
-tput setaf 7
+#tput setaf 7
 
 # file locations
 dir="${0%/*}"
@@ -92,24 +94,28 @@ settheme () {
   # cleanup
   xrdb -remove
   if [ -L $currentfile ]; then
-    rm -f $currentfile
+    rm -f -v $currentfile
   else
-    mv "$currentfile" "${currentfile}.xtheme.orig"
+    mv -v "$currentfile" "${currentfile}.xtheme.orig"
   fi
 
   # create symlink for current theme
   echo -n "Creating symbolic link for new theme... "
-  ln -s "$themesdir/${name}" "$currentfile"
+  ln -v -s "$themesdir/${name}" "$currentfile"
   echo "done."
 
   # merge current / overrides and feed to xrdb
   echo -n "xrdb: Loading new Xresources definitions... "
-  cat $currentfile $overridesfile | xrdb
+  cat $overridesfile > /tmp/xres.tmp
+  cat $currentfile >> /tmp/xres.tmp
+  mv /tmp/xres.tmp $HOME/.Xresources
+  xrdb < $HOME/.Xresources 2>/dev/null
   echo "done."
 }
 
-# gets current wallpaper 
+# gets current theme
 get () {
+  # FIXME: don't parse ls output here
   /bin/ls -al "$currentfile" | /bin/sed -E 's/^.*\ ->\ (.*)$/\1/;s/.*\/(.*)/\1/'
 }
 
@@ -117,6 +123,12 @@ reload () {
   echo "re-loading settings..."
   current="$(get)"
   settheme "$current"
+}
+
+# run if user hits the "cancel" button
+cancel () {
+  echo "User hit the <cancel> button..."
+  exit 0
 }
 
 showmenu () {
@@ -129,8 +141,13 @@ showmenu () {
     let n+=1
   done
   a=$(dialog --stdout --menu '[xtheme] X11/Xresources theme chooser' 20 70 20 $(echo $results))
+  if [[ ! "$a" ]]; then
+    cancel
+    exit 1
+  fi
   theme="${files[$a]}"
   settheme "$theme"
+  demo
   exit 0
 }
 
@@ -169,15 +186,15 @@ while [ $# -gt 0 ]; do
     ;;
     --menu)
       showmenu
-      exit 0
     ;;
     '')
-      showmenu
-      exit 0
+	usage
+      exit 1
     ;;
   esac
 done
 
-showmenu; exit 0
+usage 
+exit 1
 
 
