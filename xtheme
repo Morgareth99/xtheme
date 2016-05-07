@@ -34,7 +34,7 @@ sleep 0.3
 # file locations
 dir="${0%/*}"
 currentfile="$dir/current"
-globalsfile="$dir/globals"
+globalsfile="$dir/xresources/GLOBALS"
 themesdir="$dir/xresources/"
 
 # show usage information
