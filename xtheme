@@ -33,9 +33,9 @@ sleep 0.3
 
 # file locations
 dir="${0%/*}"
-currentfile="$dir/xresources/current"
-overridesfile="$dir/xresources/overrides"
-themesdir="$dir/xresources/themes"
+currentfile="$dir/xresources/.current"
+globalsfile="$dir/xresources/globals"
+themesdir="$dir/xresources/"
 
 # show usage information
 usage () {
@@ -48,7 +48,7 @@ usage () {
   echo "       --reload|--reset   - reload / re-set last set theme, then reload X11 resource database"
   echo "       --list             - list available themes"
   echo "       --menu             - display a curses-like menu chooser with available themes"
-  echo "       --edit             - edit Xresources overrides file, then reload X11 resource database"
+  echo "       --edit             - edit Xresources globals file, then reload X11 resource database"
   echo "       --help             - this help screen"
 }
 
@@ -103,9 +103,9 @@ settheme () {
   ln -v -s "$themesdir/${name}" "$currentfile"
   echo "done."
 
-  # merge current / overrides and feed to xrdb
+  # merge current / globals and feed to xrdb
   echo -n "xrdb: Loading new Xresources definitions... "
-  cat $overridesfile > /tmp/xres.tmp
+  cat $globalsfile > /tmp/xres.tmp
   cat $currentfile >> /tmp/xres.tmp
   mv /tmp/xres.tmp $HOME/.Xresources
   xrdb < $HOME/.Xresources 2>/dev/null
@@ -160,9 +160,9 @@ while [ $# -gt 0 ]; do
       ;;
     --edit)
       shift
-      echo "Opening overrides file in vim..."
+      echo "Opening globals file in vim..."
       sleep 1
-      vim "$dir/xresources/overrides"
+      vim "$dir/xresources/globals"
       reload
       exit 0
       ;;
