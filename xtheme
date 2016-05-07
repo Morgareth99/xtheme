@@ -29,8 +29,7 @@ tput sgr0
 }
 
 banner
-
-#tput setaf 7
+sleep 0.3
 
 # file locations
 dir="${0%/*}"
@@ -127,7 +126,7 @@ reload () {
 
 # run if user hits the "cancel" button
 cancel () {
-  echo "User hit the <cancel> button..."
+  echo "User hit the <Cancel> button, exiting..."
   exit 0
 }
 
@@ -140,7 +139,8 @@ showmenu () {
     results="$results $n $i"
     let n+=1
   done
-  a=$(dialog --stdout --menu '[xtheme] X11/Xresources theme chooser' 20 70 20 $(echo $results))
+  current="$(get)"
+  a=$(dialog --stdout --menu "[xtheme] (Current Theme: $current)" 20 70 20 $(echo $results))
   if [[ ! "$a" ]]; then
     cancel
     exit 1
