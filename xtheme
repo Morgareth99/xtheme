@@ -29,7 +29,6 @@ tput sgr0
 }
 
 banner
-sleep 0.3
 
 # file locations
 dir="${0%/*}"
@@ -186,8 +185,8 @@ while [ $# -gt 0 ]; do
     --menu)
       showmenu
     ;;
-    '')
-	usage
+    ''|*)
+   	usage
       exit 1
     ;;
   esac
