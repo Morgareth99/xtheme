@@ -29,7 +29,6 @@ tput sgr0
 }
 
 banner
-sleep 0.3
 
 # file locations
 dir="${0%/*}"
@@ -100,7 +99,7 @@ settheme () {
 
   # create symlink for current theme
   echo -n "Creating symbolic link for new theme... "
-  ln -v -s "$themesdir/${name}" "$currentfile"
+  ln -v -s "$(readlink -f $themesdir/${name})" "$currentfile"
   echo "done."
 
   # merge current / globals and feed to xrdb
