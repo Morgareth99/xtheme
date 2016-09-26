@@ -31,7 +31,7 @@ tput sgr0
 banner
 
 # file locations
-dir="${0%/*}"
+dir="$(readlink -f ${0%/*})"
 currentfile="$dir/current"
 globalsfile="$dir/globals"
 themesdir="$dir/themes/"
@@ -113,7 +113,6 @@ settheme () {
 
 # gets current theme
 get () {
-  # FIXME: don't parse ls output here
   /bin/ls -al "$currentfile" | /bin/sed -E 's/^.*\ ->\ (.*)$/\1/;s/.*\/(.*)/\1/'
 }
 
@@ -123,7 +122,7 @@ reload () {
   settheme "$current"
 }
 
-# run if user hits the "cancel" button
+# exit if user hits the "cancel" button
 cancel () {
   echo "User hit the <Cancel> button, exiting..."
   exit 0
@@ -146,7 +145,6 @@ showmenu () {
   fi
   theme="${files[$a]}"
   settheme "$theme"
-  exit 0
 }
 
 # parse commandline arguments
@@ -160,7 +158,6 @@ while [ $# -gt 0 ]; do
     --edit)
       shift
       echo "Opening globals file in vim..."
-      sleep 1
       vim "$globalsfile"
       reload
       exit 0
@@ -183,16 +180,18 @@ while [ $# -gt 0 ]; do
       exit 1
     ;;
     --menu)
+      while true; do
       showmenu
+      done
     ;;
-    ''|*)
-   	usage
+    *)
+      usage
       exit 1
     ;;
   esac
 done
 
-usage 
+usage
 exit 1
 
 
