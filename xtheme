@@ -134,19 +134,22 @@ showmenu () {
   files=(*)
   results=""
   n=0
+  current="$(get)"
   for i in "${files[@]}"; do
+    if [[ "$current" == $i ]]; then
+    current_i="$n"
+    fi
     results="$results $n $i"
     let n+=1
   done
-  current="$(get)"
-  a=$(dialog --stdout --menu "[xtheme] (Current Theme: $current)" 20 70 20 $(echo $results))
+  a=$(dialog --default-item "$current_i" --stdout --menu "[xtheme] (Current Theme: $current)" 20 70 20 $(echo $results))
   if [[ ! "$a" ]]; then
     cancel
     exit 1
   fi
   theme="${files[$a]}"
   settheme "$theme"
-  exit 0
+  $0 --menu
 }
 
 # parse commandline arguments
