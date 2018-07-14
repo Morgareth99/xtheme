@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# [xtheme] xtremely lightweight Xresources color scheme manager
+# [xtheme] xtremely lightweight Xresources color scheme manager for URxvt
 #
 # Copyright (C) 2016 Armin Jenewein <armin@m2m.pm>
 #
@@ -19,13 +19,13 @@
 #
 
 banner () {
-tput setaf 4
-echo -n "["
-tput setaf 5
-echo -n "xtheme"
-tput setaf 4
-echo -n "]  "
-tput sgr0
+  tput setaf 4
+  echo -n "["
+  tput setaf 5
+  echo -n "xtheme"
+  tput setaf 4
+  echo -n "]  "
+  tput sgr0
 }
 
 banner
